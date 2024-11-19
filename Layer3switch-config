@@ -1,0 +1,56 @@
+The Mls-SW Layer 3 switch is configured as the core switch in the enterprise network, providing inter-VLAN routing, OSPF-based dynamic routing, and redundancy for default routes. 
+It acts as the default gateway for multiple VLANs and ensures efficient communication between subnets while relaying DHCP requests to a centralized DHCP server.
+
+Basic Configuration:
+Hostname: Mls-SW is set as the hostname.
+Service Password Encryption: Passwords are encrypted using (service password-encryption).
+
+SSH Configuration:
+SSH version 2 is enabled for secure remote management.
+Domain name cisco.net is configured to support SSH key generation.
+No IP Domain Lookup: Prevents the device from resolving mistyped commands as domain names.
+
+Spanning-Tree Protocol:
+Mode: PVST (Per VLAN Spanning Tree) is enabled. This is useful for VLAN-specific load balancing and loop prevention.
+
+Interface Configurations:
+Layer 3 Interfaces (routed ports):
+GigabitEthernet1/0/1: 172.16.3.146/30
+GigabitEthernet1/0/2: 172.16.3.149/30
+These ports are configured as routed ports (no switchport), allowing them to function at Layer 3.
+
+Layer 2 Trunks:
+Interfaces GigabitEthernet1/0/3 to GigabitEthernet1/0/8 are set to switchport mode trunk for carrying multiple VLANs between switches.
+Unused Ports:
+Remaining ports are not configured or disabled, which is good practice for security.
+
+VLAN Interfaces (SVIs):
+VLANs are configured with corresponding IP addresses and DHCP relay (ip helper-address) pointing to 172.16.3.130:
+
+VLAN 10: 172.16.1.1/25
+VLAN 20: 172.16.1.129/25
+VLAN 30: 172.16.2.1/25
+VLAN 40: 172.16.2.129/25
+VLAN 50: 172.16.3.1/25
+VLAN 60: 172.16.3.129/28
+Purpose: These SVIs act as the default gateways for their respective VLANs, providing inter-VLAN routing.
+
+Routing Configuration:
+OSPF (Process 10):
+The Layer 3 switch is participating in OSPF with router-id 2.2.2.2.
+Subnets from VLANs and routed interfaces are advertised into OSPF Area 0. This allows routing between VLANs and other network segments.
+
+Static Routes:
+Default route through GigabitEthernet1/0/1 (primary) and GigabitEthernet1/0/2 (backup with AD 120). This provides redundancy for external connectivity.
+
+Security Configuration
+Local Authentication:
+A local username (admin) is configured with encrypted Type 7 passwords.
+
+VTY Lines:
+Remote access is secured via SSH (transport input ssh).
+Banner MOTD:
+A banner message is displayed to warn against unauthorized access.
+
+Summary :
+This configuration supports a scalable and secure enterprise network, providing redundancy and inter-VLAN routing while maintaining basic security best practices.
