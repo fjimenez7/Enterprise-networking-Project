@@ -1,0 +1,34 @@
+Configuration Description for sales-sw (Access Layer Switch)
+
+Introduction:
+The sales-sw is one of six access layer switches in the network, each supporting different department VLANs. While the overall configuration structure is consistent across all access switches, 
+VLAN assignments differ based on departmental needs. This description focuses specifically on the sales-sw, configured for VLAN 10 to serve the Sales department.
+
+Configuration Breakdown
+
+Hostname: Named sales-sw for identification.
+Service Password Encryption: Protects passwords in the configuration.
+No IP Domain-Lookup: Prevents DNS-related delays for invalid commands.
+Spanning-Tree Protocol: PVST mode is enabled, ensuring loop prevention with VLAN-specific spanning-tree instances.
+Interface Configurations:
+
+Trunk Ports:
+FastEthernet0/1 and FastEthernet0/2 are trunk ports for uplinks to distribution/core switches.
+Access Ports:
+FastEthernet0/3 to FastEthernet0/24 are access ports assigned to VLAN 10 for end-user devices within the Sales department.
+GigabitEthernet Ports:
+Both GigabitEthernet0/1 and GigabitEthernet0/2 are shutdown and not currently in use.
+VLAN Configuration:
+
+VLAN 10: Configured for the Sales department devices. The default VLAN (VLAN 1) is shutdown and unconfigured for security purposes.
+
+Banner Message:
+A Message of the Day (MOTD) banner warns against unauthorized access.
+
+Console and VTY Lines:
+Both console and VTY lines are secured with login requirements
+
+Summary:
+The sales-sw is one of six access switches, each serving a specific department through its unique VLAN configuration. While this description covers the sales-sw with VLAN 10 for the Sales department,
+the configurations on other access switches are similar, with the main difference being the VLAN assignments tailored to their respective departments. This consistent setup simplifies management 
+while ensuring appropriate connectivity for each department.
