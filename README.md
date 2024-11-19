@@ -11,3 +11,6 @@ The project also included WLAN configuration, setting up wireless access points 
 This project highlights proficiency in designing and configuring key networking technologies such as VLANs, SVI, DHCP, NAT, ACLs, and WLAN, all while ensuring robust security and reliable performance. It serves as a comprehensive demonstration of enterprise network design principles and practical implementation using Cisco Packet Tracer.
 
 The repository contains Packet Tracer files, detailed network documentation, and configuration scripts to provide insight into the network's structure and functionality. This project is a valuable resource for anyone interested in understanding enterprise network design and implementation best practices.
+
+
+Walkthrough video I followed https://www.youtube.com/watch?v=eqEd84yeRxg (Gurutech Networking Training)
