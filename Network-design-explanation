@@ -1,20 +1,21 @@
-Network Topology Overview
+Network Topology Overview:
 The network is designed for a multi-floor office building, with distinct departments assigned to each floor:
 
 First Floor: Sales and HR Departments
 Second Floor: Finance and Admin Departments
 Third Floor: ICT and Server Room
-Redundancy and Internet Connectivity
+
+Redundancy and Internet Connectivity:
 The design incorporates two Internet Service Providers (ISPs) for increased redundancy. Each ISP is connected to a dedicated router (Cisco 2911), 
 configured with /30 subnets to establish point-to-point connections between the routers and the ISPs. This dual-ISP setup ensures high availability in case either the router or ISP fails. 
 NAT/PAT (Network Address Translation/Port Address Translation) is configured on the routers to manage address translation and facilitate communication between the internal network and the internet.
 
-Core and Distribution Layer
+Core and Distribution Layer:
 To further enhance redundancy, the two routers are connected to two Layer 3 switches (Cisco 3560). These switches are also connected to the routers via /30 subnets, 
 ensuring point-to-point connectivity between the core routers and distribution switches. The OSPF (Open Shortest Path First) routing protocol is implemented on both the routers 
 and Layer 3 switches to enable dynamic routing across the network and provide fault tolerance.
 
-Access Layer and VLAN Design
+Access Layer and VLAN Design:
 Each Layer 3 switch is connected to six access switches (Cisco 2960), which serve as the entry points for the network on each floor. 
 The access switches are configured with trunk ports to support inter-VLAN communication between the different departments.
 
@@ -26,13 +27,14 @@ VLAN 30: Finance
 VLAN 40: Admin
 VLAN 50: ICT
 VLAN 60: Server Room
+
 Each access switch is configured to assign ports to the correct VLAN based on the connected device’s department. Additionally, Switch Virtual Interfaces (SVIs) are 
 configured on the Layer 3 switches to provide routing capabilities for each VLAN.
 
-Devices and Addressing
+Devices and Addressing:
 Each department is equipped with various devices, including PCs, laptops, printers, access points, and tablets. These devices receive their IP addresses dynamically from the DHCP server. 
 However, devices in the Server Room are assigned static IP addresses to ensure stability and prevent address changes, which is crucial for server availability and accessibility.
 
-Security Configurations
+Security Configurations:
 To enhance network security, Access Control Lists (ACLs) are implemented to control traffic flow and restrict unauthorized access between departments. Additionally, 
 Switchport Port Security is configured on each access switch to prevent unauthorized devices from connecting to the network. This adds an extra layer of protection by limiting access to only approved devices within each VLAN.
