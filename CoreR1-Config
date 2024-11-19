@@ -1,0 +1,90 @@
+Configuration Analysis for CoreR1 Router(similar config for both router are one will be described) 
+
+The CoreR1 router has been configured as a central device within an enterprise network, with a focus on secure management, efficient routing, 
+and NAT for internet connectivity. Below is a detailed breakdown of the configuration and its significance:
+
+General Settings
+Hostname:
+The router is named CoreR1 for easy identification within the network.
+
+Service Password Encryption:
+service password-encryption is enabled to encrypt plaintext passwords in the configuration for added security.
+
+Administrative Credentials:
+A local username admin with an encrypted password is created for SSH-based management. The enable password is also encrypted.
+
+Domain Name:
+The domain name is set to cisco.net, which is required for generating RSA keys for SSH.
+
+Interface Configuration
+GigabitEthernet0/0:
+IP Address: 172.16.3.154/30
+Assigned as an inside NAT interface, connecting to the internal network.
+
+GigabitEthernet0/1:
+IP Address: 172.16.3.145/30
+Also configured as an inside NAT interface for redundancy or load balancing.
+
+Serial0/2/0:
+IP Address: 195.136.17.1/30
+Configured as an outside NAT interface, connecting to an ISP for external communication.
+
+Serial0/2/1:
+IP Address: 195.136.17.5/30
+Configured as a backup ISP connection with a higher administrative distance.
+
+Routing Configuration
+OSPF (Open Shortest Path First):
+
+OSPF is configured with Process ID 10 and Router ID 3.3.3.3.
+Networks included in Area 0 (Backbone Area):
+172.16.3.144/30
+172.16.3.152/30
+195.136.17.0/30
+195.136.17.4/30
+log-adjacency-changes tracks OSPF neighbor state changes for monitoring.
+
+Static Routes:
+Primary Default Route:
+ip route 0.0.0.0 0.0.0.0 Serial0/2/0 (Primary ISP)
+Backup Default Route:
+ip route 0.0.0.0 0.0.0.0 Serial0/2/1 120 (Backup ISP with higher AD of 120).
+
+NAT Configuration
+NAT Overload (PAT):
+Inside local traffic (from 172.16.x.x) is translated to the public IP of Serial0/2/1 for internet access.
+
+Access List 1 permits traffic from internal subnets:
+Example command: access-list 1 permit 172.16.1.0 0.0.0.127 (you would do this for each internal subnet that needs outsode access)
+172.16.1.0/25, 172.16.1.128/25, 172.16.2.0/25, 172.16.2.128/25, etc.
+
+NAT statement:
+ip nat inside source list 1 interface Serial0/2/1 overload.
+
+Access Control
+Access-List 1:
+Permits traffic from specific internal subnets (172.16.x.x) to be translated for NAT.
+Security Features
+SSH Version 2:
+
+Enabled for secure remote management.
+VTY lines configured for local login (login local) and only allow SSH (transport input ssh).
+Port Security:
+Not explicitly configured in this router but can be assumed to be implemented at the access layer.
+
+Banner:
+A Message of the Day (MOTD) banner is configured to warn unauthorized users.
+
+Additional Configurations
+Spanning Tree:
+
+The router is configured in PVST mode to prevent Layer 2 loops, though it's more relevant for switches.
+
+Summary:
+This router serves as a core router within the network and connects the enterprise LAN to the ISPs for internet access. Key configurations include:
+
+OSPF for dynamic routing.
+NAT Overload for internet connectivity.
+SSH for secure management.
+Static routing for backup ISP connectivity.
+Access control using ACLs.
